@@ -1,0 +1,31 @@
+qid,question,context_excerpt,gold_answer,predicted_answer,em,f1,pattern_tag
+EX_01,Who is the CEO of Meta?,Apple CEO Tim Cook met with Meta CEO Mark Zuckerberg to discuss privacy.,Mark Zuckerberg,Mark Zuckerberg,1,1.0,same-type-distractor
+EX_02,Where is the headquarters of Microsoft?,"While Google is based in Mountain View, Microsoft is headquartered in Redmond.",Redmond,Redmond,1,1.0,same-type-distractor
+EX_03,Where is the meeting located?,The team meeting will be held in Cairo.,Cairo,Cairo,1,1.0,control
+EX_04,What year was the iPad released?,"The iPhone came out in 2007, but the iPad was not released until 2010.",2010,2010,1,1.0,temporal-confusion
+EX_05,Who founded Tesla?,"Elon Musk is a major shareholder, but Tesla was founded by Martin Eberhard and M",Martin Eberhard and Marc Tarpenning,Martin Eberhard and Marc Tarpenning,1,1.0,same-type-distractor
+EX_06,What company acquired Figma?,"Salesforce considered buying Figma, but Adobe eventually acquired it.",Adobe,Adobe,1,1.0,same-type-distractor
+EX_07,Who is the lead developer?,"John worked on the UI, while Sarah was appointed the lead developer for the back",Sarah,Sarah,1,1.0,same-type-distractor
+EX_08,Which OS was installed?,"They considered Windows and Linux, but eventually installed macOS.",macOS,macOS,1,1.0,same-type-distractor
+EX_09,What color is the car?,The car is blue.,blue,blue,1,1.0,control
+EX_10,When did the Beta version launch?,"The Alpha testing started in January, while the Beta version launched in March.",March,March,1,1.0,temporal-confusion
+EX_11,Who won the 2023 AI award?,"The 2022 award went to Yann LeCun, while the 2023 AI award was given to Demis Ha",Demis Hassabis,Demis Hassabis,1,1.0,same-type-distractor
+EX_12,What was the Series B funding amount?,The startup raised 5 million in Series A and later secured 20 million in Series ,20 million,20 million,1,1.0,same-type-distractor
+EX_13,Which company did Sony acquire?,"Microsoft bought Activision, but Sony recently acquired Bungie.",Bungie,Bungie,1,1.0,same-type-distractor
+EX_14,Where is the new data center located?,"They have an old facility in Texas, but the new data center is in Ohio.",Ohio,Ohio,1,1.0,same-type-distractor
+EX_15,Who is the CFO of the company?,"The CEO Susan Wojcicki stepped down, and the CFO Ruth Porat took over.",Ruth Porat,Ruth Porat,1,1.0,same-type-distractor
+EX_16,Which chip is in the new laptop?,"The Pro model uses the M2 Max chip, while the Air model uses the M2 chip.",M2,M2 Max,0,0.6666666666666666,same-type-distractor
+EX_17,What language is the backend written in?,"The frontend uses React, but the backend is entirely written in Go.",Go,Go,1,1.0,same-type-distractor
+EX_18,What is the price of the Premium plan?,"The Basic plan costs 10 dollars, whereas the Premium plan is 25 dollars.",25 dollars,25 dollars,1,1.0,same-type-distractor
+EX_19,Who won the race?,"Lewis Hamilton led for most of the race, but Max Verstappen won at the end.",Max Verstappen,Max Verstappen,1,1.0,same-type-distractor
+EX_20,Who is the guest speaker?,"The host was Joe Rogan, and the guest speaker was Sam Altman.",Sam Altman,Sam Altman,1,1.0,control
+EX_21,What year did they move to London?,They lived in New York until 2015 and then moved to London in 2018.,2018,2018,1,1.0,temporal-confusion
+EX_22,What is the name of the new AI model?,"OpenAI released GPT-4, while Google launched Gemini shortly after.",Gemini,Gemini,1,1.0,same-type-distractor
+EX_23,In what city was the conference held?,The board met in Paris to decide that the conference would be held in Berlin.,Berlin,Berlin,1,1.0,same-type-distractor
+EX_24,Who is the author of the report?,"The data was collected by Peter, but the final report was written by Sarah.",Sarah,Sarah,1,1.0,same-type-distractor
+EX_25,Which phone has the better camera?,"The Pixel 8 has a great zoom, but the iPhone 15 Pro has the better camera.",iPhone 15 Pro,iPhone 15 Pro,1,1.0,same-type-distractor
+EX_26,How much did the CEO donate?,"The company gave 1 million, while the CEO personally donated 50000 dollars.",50000 dollars,50000 dollars,1,1.0,same-type-distractor
+EX_27,When does the sale end?,The sale starts on Monday and officially ends on Thursday.,Thursday,Thursday,1,1.0,temporal-confusion
+EX_28,Which team won the hackathon?,"Team Alpha got second place, while Team Delta won the grand prize.",Team Delta,Team Delta,1,1.0,same-type-distractor
+EX_29,What is the name of the CEO?,The CEO is Satya Nadella.,Satya Nadella,Satya Nadella,1,1.0,control
+EX_30,What browser was used for the final audit?,"They tested on Firefox, but Chrome was used for the final audit.",Chrome,Chrome,1,1.0,same-type-distractor

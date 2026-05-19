@@ -1,46 +1,45 @@
 # Adversarial QA Probe — Analysis Memo
 
-> Replace each placeholder section. Memo target: ~1 page. The TA rubric rewards specificity grounded in your data.
-
 ## 1. Hypothesis
 
-State your targeted failure mode operationally:
-- **Input pattern:** _(what kind of input triggers the failure?)_
-- **Output pattern:** _(what does the model do wrong?)_
-- **Why you hypothesize this:** _(2–3 sentences on the underlying cause — model architecture, training data gap, span-prediction bias, etc.)_
+- **Input pattern:** The context contains multiple entities of the same semantic type (e.g., two people, two dates, or two companies), where an incorrect entity is placed in a prominent position such as the beginning of the sentence.
+- **Output pattern:** The model is expected to incorrectly predict the distractor entity or return an irrelevant span instead of the gold answer.
+- **Why you hypothesize this:** DistilBERT-based models often rely on lexical overlap and entity-type matching rather than deep logical reasoning. I hypothesize that the model lacks the syntactic depth to distinguish between the "subject" and the "object" when both share the same entity class, leading to a proximity bias.
 
 ## 2. Set Design
 
-- Total examples: _(N)_
-- Tags used: _(list pattern_tag values and their counts)_
-- Why these tags: _(one sentence per tag)_
-- Control examples: _(how many; what they isolate; why they confirm the pattern is the discriminator)_
+- **Total examples:** 30
+- **Tags used:** 
+    - same-type-distractor: 22
+    - temporal-confusion: 4
+    - control: 4
+- **Why these tags:** 
+    - same-type-distractor tests if the model can resolve the correct entity when multiple valid candidates of the same type exist.
+    - temporal-confusion targets the model's ability to handle chronological logic and multiple date references.
+    - control establishes a performance baseline on simple extractive tasks without any misleading information.
+- **Control examples:** 4 examples; they isolate the model's basic ability to extract a single clearly stated entity; they confirm the model's fundamental QA capabilities are intact.
 
 ## 3. Results
 
-- Aggregate EM: _(value)_; Aggregate F1: _(value)_
-- Lab 7B baseline (from your `qa_metrics.json`): EM _(value)_; F1 _(value)_
-- Per-pattern_tag breakdown:
+- **Aggregate EM:** 0.9667
+- **Aggregate F1:** 0.9889
+- **Lab 7B baseline:** EM 0.3440; F1 0.4611
+- **Per-pattern_tag breakdown:**
 
 | Pattern | n | EM | F1 | vs. baseline |
 |---|---|---|---|---|
-| _(tag 1)_ | _(n)_ | _(em)_ | _(f1)_ | _(±diff)_ |
-| _(tag 2)_ | _(n)_ | _(em)_ | _(f1)_ | _(±diff)_ |
-| control | _(n)_ | _(em)_ | _(f1)_ | _(±diff)_ |
+| same-type-distractor | 22 | 0.9545 | 0.9848 | +0.5237 |
+| temporal-confusion | 4 | 1.0000 | 1.0000 | +0.5389 |
+| control | 4 | 1.0000 | 1.0000 | +0.5389 |
 
-Cite at least 3 specific (qid, question, gold, predicted) tuples that illustrate the patterns:
+Specific examples illustrating the patterns:
 
-- **(qid)** _question_ → gold: _gold_, predicted: _pred_. _(commentary)_
-- _(repeat)_
+- **(EX_01)** Who is the CEO of Meta? → gold: Mark Zuckerberg, predicted: Mark Zuckerberg. Despite the early mention of Tim Cook, the model correctly identified the subject.
+- **(EX_05)** Who founded Tesla? → gold: Martin Eberhard and Marc Tarpenning, predicted: Martin Eberhard and Marc Tarpenning. The model successfully bypassed Elon Musk as a distractor.
+- **(EX_21)** What year did they move to London? → gold: 2018, predicted: 2018. The model correctly distinguished the move date from the previous residence date.
 
 ## 4. Production Defense
 
-Pick **one** specific engineering action that follows from your findings. Examples (don't list all five — pick one and reason concretely):
+**Engineering Action:** Confidence-threshold filter that routes below-threshold queries to humans.
 
-- Confidence-threshold filter that routes below-threshold queries to humans.
-- Retraining with adversarial data added to the fine-tuning set.
-- Replacing the QA model with one trained for no-answer support.
-- Restricting the QA model to only contexts that pass an upstream filter.
-- Shrinking the production input distribution to exclude the failure pattern.
-
-Explain in 2–3 sentences why this defense follows from your per-pattern numbers.
+**Explanation:** While the model showed high robustness on this specific adversarial set, the massive gap between these results and the Lab 7B baseline (0.4611 F1) suggests that the model is highly sensitive to context noise. By implementing a confidence-threshold filter, we can identify predictions where the model's internal score is low—indicating high competition between multiple entities—and route those high-risk cases to human agents for manual verification to maintain production quality.
